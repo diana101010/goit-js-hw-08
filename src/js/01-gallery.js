@@ -67,21 +67,35 @@ const galleryItems = [
   },
 ];
 
-const galleryContainer = document.querySelector('.gallery');
-const liImage = galleryItems
-  .map(
-    galleryItem =>
-      `<li class="gallery__item">
-   <a class="gallery__link" href="${galleryItem.original}">
-      <img class="gallery__image" src="${galleryItem.preview}" alt="${galleryItem.description}"  />
-   </a>
-</li>`
-  )
-  .join('');
+const gallery = document.querySelector('.gallery');
+// crearea galeriei HTML
+galleryItems.forEach(item => {
+  const li = document.createElement('li');
+  li.classList.add('style-img');
 
-galleryContainer.insertAdjacentHTML('afterbegin', liImage);
+  const a = document.createElement('a');
+  a.classList.add('gallery__link');
+  a.setAttribute('href', item.original);
 
-const lightbox = new SimpleLightbox('.gallery__item a', {
+  const img = document.createElement('img');
+  img.src = item.preview;
+  img.alt = item.description;
+  img.setAttribute('data-source', item.original);
+
+  li.appendChild(a);
+  a.appendChild(img);
+  gallery.appendChild(li);
+});
+console.log(galleryItems);
+// library SimpleLightbox
+function renderGalleryItems(list, items) {
+  items.forEach(item => {
+    const galleryItem = createGalleryItem(item);
+  });
+}
+console.log(renderGalleryItems);
+
+const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
